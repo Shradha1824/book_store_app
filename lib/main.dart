@@ -1,4 +1,5 @@
 import 'package:book_store_app/screens/login%20.dart';
+import 'package:book_store_app/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: SignUpPage(),
     );
   }
 }
