@@ -26,7 +26,6 @@ class LoginPageState extends State<LoginPage> {
               right: 100,
               left: 100,
             ),
-            //  padding: EdgeInsets.all(50),
             child: Column(children: [
               SizedBox(
                 height: 80,
