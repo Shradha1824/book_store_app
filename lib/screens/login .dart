@@ -8,6 +8,15 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
   FocusNode _focusNode = FocusNode();
+
+  String? NumberValidate(value) {
+    if (value.isEmpty) {
+      return "Text Expected";
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,29 +75,35 @@ class LoginPageState extends State<LoginPage> {
                 )
               ]),
               child: TextFormField(
-                keyboardType: TextInputType.number,
-                cursorColor: Colors.orange,
-                focusNode: _focusNode,
-                decoration: InputDecoration(
-                    labelText: "Mobile Number",
-                    labelStyle:
-                        TextStyle(color: Colors.orange.withOpacity(0.8)),
-                    contentPadding: EdgeInsets.fromLTRB(20, 20, 30, 20),
-                    hintText: "Enter your phone number",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.horizontal()),
-                    suffixIcon: Icon(
-                      Icons.person,
-                      color: Colors.orange,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: _focusNode.hasFocus
-                                ? Colors.orange
-                                : Colors.orange))),
-              )),
+                  keyboardType: TextInputType.number,
+                  cursorColor: Colors.orange,
+                  focusNode: _focusNode,
+                  decoration: InputDecoration(
+                      labelText: "Mobile Number",
+                      labelStyle:
+                          TextStyle(color: Colors.orange.withOpacity(0.8)),
+                      contentPadding: EdgeInsets.fromLTRB(20, 20, 30, 20),
+                      hintText: "Enter your phone number",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.horizontal()),
+                      suffixIcon: Icon(
+                        Icons.call,
+                        color: Colors.orange,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: _focusNode.hasFocus
+                                  ? Colors.orange
+                                  : Colors.orange))),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter Your Mobile Number";
+                    }
+                  })),
           FlatButton(
-            onPressed: () {},
+            onPressed: () {
+              NumberValidate("");
+            },
             child: Container(
               width: 260,
               margin: EdgeInsets.all(20),
