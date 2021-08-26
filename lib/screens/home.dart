@@ -307,44 +307,6 @@ class HomeState extends State<Home> {
                     author: "Devendra Prabhudesi",
                     price: "850"),
               ]),
-              //   SizedBox(
-              //     height: 20,
-              //   ),
-              //   Row(children: [
-              //     SizedBox(
-              //       width: 5,
-              //     ),
-              //     _buildFeaturedProduct(image: ("images/book16.png")),
-              //     SizedBox(
-              //       width: 10,
-              //     ),
-              //     _buildFeaturedProduct(image: ("images/book18.png")),
-              //   ]),
-              //   SizedBox(
-              //     height: 20,
-              //   ),
-              //   Row(children: [
-              //     SizedBox(
-              //       width: 5,
-              //     ),
-              //     _buildFeaturedProduct(image: ("images/book19.png")),
-              //     SizedBox(
-              //       width: 10,
-              //     ),
-              //     _buildFeaturedProduct(image: ("images/book20.png")),
-              //   ]),
-              //   SizedBox(
-              //     height: 20,
-              //   ),
-              //   Row(children: [
-              //     SizedBox(
-              //       width: 5,
-              //     ),
-              //     _buildFeaturedProduct(image: ("images/book21.png")),
-              //     SizedBox(
-              //       width: 10,
-              //     ),
-              //   ]),
             ])));
   }
 }
