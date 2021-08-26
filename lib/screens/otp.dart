@@ -18,8 +18,6 @@ class OtpVerificationPageState extends State<OtpVerificationPage> {
   TextEditingController _pinPutController = TextEditingController();
   FocusNode _pinPutFocusNode = FocusNode();
 
-  var duration;
-
   @override
   void initState() {
     super.initState();
