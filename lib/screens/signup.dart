@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:book_store_app/screens/login%20.dart';
 import 'package:book_store_app/utils/firebase_crud.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:phone_number/phone_number.dart';
@@ -72,8 +73,6 @@ class SignUpPageState extends State<SignUpPage> {
                 color: Colors.orange.withOpacity(0.8)),
           ),
           Container(
-              //child: SingleChildScrollView(
-              //  scrollDirection: Axis.vertical,
               padding: EdgeInsets.only(
                 left: 30,
                 right: 30,
@@ -83,7 +82,7 @@ class SignUpPageState extends State<SignUpPage> {
                     autovalidate: true,
                     key: formkey,
                     child: Column(children: [
-                      Padding(padding: EdgeInsets.all(20)),
+                      Padding(padding: EdgeInsets.all(15)),
                       TextFormField(
                         controller: _firstName,
                         cursorColor: Colors.orange,
@@ -102,11 +101,11 @@ class SignUpPageState extends State<SignUpPage> {
                               color: Colors.orange,
                             )),
                       ),
-                      Padding(padding: EdgeInsets.all(15)),
+                      Padding(padding: EdgeInsets.all(12)),
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         controller: _emailId,
-                         cursorColor: Colors.orange,
+                        cursorColor: Colors.orange,
                         decoration: InputDecoration(
                           labelText: 'EmailId',
                           labelStyle: TextStyle(color: Colors.orangeAccent),
@@ -127,11 +126,11 @@ class SignUpPageState extends State<SignUpPage> {
                           RequiredValidator(errorText: "Valid Email Expected"),
                         ]),
                       ),
-                      Padding(padding: EdgeInsets.all(15)),
+                      Padding(padding: EdgeInsets.all(12)),
                       TextFormField(
                           obscureText: !visiblity,
                           controller: _passward,
-                           cursorColor: Colors.orange,
+                          cursorColor: Colors.orange,
                           decoration: InputDecoration(
                               labelText: 'Password',
                               labelStyle: TextStyle(color: Colors.orangeAccent),
@@ -154,11 +153,11 @@ class SignUpPageState extends State<SignUpPage> {
                                           : Colors.orange))),
                           validator: MinLengthValidator(6,
                               errorText: "Should be atleat 6 charectors")),
-                      Padding(padding: EdgeInsets.all(15)),
+                      Padding(padding: EdgeInsets.all(12)),
                       TextFormField(
                           keyboardType: TextInputType.number,
                           controller: _phoneNo,
-                           cursorColor: Colors.orange,
+                          cursorColor: Colors.orange,
                           decoration: InputDecoration(
                               labelText: 'Phone Number',
                               prefixText: "+91 ",
@@ -183,7 +182,7 @@ class SignUpPageState extends State<SignUpPage> {
                           }),
                     ])),
               )),
-          Padding(padding: EdgeInsets.all(15)),
+          Padding(padding: EdgeInsets.all(12)),
           RaisedButton(
             child: Text(
               "Register Now",
@@ -202,9 +201,29 @@ class SignUpPageState extends State<SignUpPage> {
                       emailId: _emailId.text,
                       password: _passward.text,
                       phoneNo: _phoneNo.text)
-                  .whenComplete(() => Navigator.push(context,
+                  .whenComplete(() => Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => LoginPage())));
             },
+          ),
+          Padding(padding: EdgeInsets.all(10)),
+          Center(
+            child: RichText(
+              text: TextSpan(
+                  text: 'I Have Already An Account?',
+                  style: TextStyle(color: Colors.black, fontSize: 15),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: ' Login',
+                        style: TextStyle(color: Colors.orange, fontSize: 15),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                          })
+                  ]),
+            ),
           )
         ])));
   }

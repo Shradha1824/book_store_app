@@ -1,8 +1,10 @@
+import 'package:book_store_app/screens/otp.dart';
 import 'package:book_store_app/screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'screens/home.dart';
 import 'screens/login .dart';
 
 void main() async {
@@ -25,11 +27,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SignUpPage(),
+        home: Home(),
         initialRoute: 'signup',
         routes: {
           '/signup': (context) => SignUpPage(),
           '/login': (context) => LoginPage(),
+          '/otp': (context) => OtpVerificationPage(""),
         });
   }
 }
