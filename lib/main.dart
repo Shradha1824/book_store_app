@@ -28,8 +28,9 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: Home(),
-        initialRoute: 'signup',
+        initialRoute: 'home',
         routes: {
+          '/home': (context) => Home(),
           '/signup': (context) => SignUpPage(),
           '/login': (context) => LoginPage(),
           '/otp': (context) => OtpVerificationPage(""),
