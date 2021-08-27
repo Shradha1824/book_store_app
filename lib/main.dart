@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
         initialRoute: 'home',
         routes: {
           '/home': (context) => Home(),
-          // '/single_book_details_screen': (context) => SingleBookPage(image: image, title: title, author: author, price: price)
           '/signup': (context) => SignUpPage(),
           '/login': (context) => LoginPage(),
           '/otp': (context) => OtpVerificationPage(""),

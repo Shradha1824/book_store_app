@@ -36,8 +36,8 @@ class HomeState extends State<Home> {
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: _focusNode.hasFocus
-                                      ? Colors.white
-                                      : Colors.white))),
+                                      ? Colors.grey.shade600
+                                      : Colors.grey.shade500))),
                     ))),
             SizedBox(
               width: 13,

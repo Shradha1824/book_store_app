@@ -79,7 +79,6 @@ class DropDownState extends State<DropDown> {
         ),
         child: DropdownButton(
           iconSize: 25,
-          underline: SizedBox(),
           hint: Text(
             ' Sort by relevance   ',
             style: TextStyle(fontSize: 12),

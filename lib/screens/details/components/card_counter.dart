@@ -42,8 +42,8 @@ class CardCounterState extends State<CardCounter> {
 
   SizedBox buildOutlineButton({required IconData icon, press}) {
     return SizedBox(
-        width: 35,
-        height: 25,
+        width: 40,
+        height: 20,
         child: OutlinedButton(
             onPressed: press,
             child: Icon(
