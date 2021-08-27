@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:book_store_app/constants.dart';
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/screens/details/components/card_counter.dart';
+import 'package:book_store_app/screens/place_order.dart';
 import 'package:flutter/material.dart';
 
 class SingleBookPage extends StatelessWidget {
@@ -17,11 +18,10 @@ class SingleBookPage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
             child: Column(children: [
-          //Text(image),
           Container(
               margin: EdgeInsets.only(top: 50, right: 15, left: 15, bottom: 15),
-              //color: Colors.blue,
-              padding: EdgeInsets.only(left: 10, bottom: 15, right: 15),
+              padding:
+                  EdgeInsets.only(left: 15, bottom: 15, right: 15, top: 15),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey.shade400),
               ),
@@ -29,8 +29,8 @@ class SingleBookPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Row(crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisAlignment: MainAxisAlignment.end,
+                    Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             height: 220,
@@ -49,15 +49,30 @@ class SingleBookPage extends StatelessWidget {
                                 SizedBox(
                                   height: kDefaultPadding,
                                 ),
-                                Text(books.title),
+                                Text(
+                                  books.title,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black.withOpacity(0.8)),
+                                ),
                                 SizedBox(
                                   height: kDefaultPadding,
                                 ),
-                                Text(books.author),
+                                Text(
+                                  books.author,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black.withOpacity(0.8)),
+                                ),
                                 SizedBox(
                                   height: kDefaultPadding,
                                 ),
-                                Text("Rs. ${books.price}"),
+                                Text(
+                                  "Rs. ${books.price}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black.withOpacity(0.8)),
+                                ),
                                 SizedBox(
                                   height: kDefaultPadding,
                                 ),
@@ -66,7 +81,13 @@ class SingleBookPage extends StatelessWidget {
                               ])
                         ]),
                     RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    PlaceOrder(books: books)));
+                      },
                       child: Text("PLACE ORDER",
                           style: TextStyle(
                             color: Colors.white,
@@ -76,25 +97,43 @@ class SingleBookPage extends StatelessWidget {
                   ])),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
-              margin: EdgeInsets.only(top: 15, right: 15, left: 15, bottom: 15),
-              padding: EdgeInsets.only(left: 10, bottom: 15, right: 15),
-              child: Text(
-                "Customer Details",
-                style: TextStyle(color: Colors.black.withOpacity(0.8)),
+              height: 60,
+              margin: EdgeInsets.only(right: 15, left: 15, bottom: 15),
+              padding: EdgeInsets.all(kDefaultPadding),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Customer Details",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black.withOpacity(0.7),
+                        fontSize: 15),
+                  )
+                ],
               ),
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade400)),
             ),
             Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-              padding: EdgeInsets.all(20),
-              child: Text(
-                "Order Summery",
-                style: TextStyle(color: Colors.black.withOpacity(0.8)),
+              height: 60,
+              margin: EdgeInsets.only(right: 15, left: 15, bottom: 15),
+              padding: EdgeInsets.all(kDefaultPadding),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Order Summury",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black.withOpacity(0.7),
+                        fontSize: 15),
+                  )
+                ],
               ),
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade400)),
-            )
+            ),
           ])
         ])));
   }
