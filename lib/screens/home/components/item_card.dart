@@ -26,7 +26,6 @@ class ItemCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: Colors.grey.shade400)),
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(books.image),
@@ -35,38 +34,66 @@ class ItemCard extends StatelessWidget {
                 ),
                 Text(books.title),
                 SizedBox(
-                  height: 2,
+                  height: 3,
                 ),
                 Text("by ${books.author}"),
                 SizedBox(
-                  height: 2,
+                  height: 3,
                 ),
                 Text("Rs. ${books.price}"),
                 SizedBox(
-                  height: 2,
+                  height: 3,
                 ),
                 Row(children: [
-                  RaisedButton(
-                      color: Colors.orangeAccent,
-                      child: Text(
-                        "ADD TO CARD",
-                        style: TextStyle(
-                          fontSize: 10,
-                        ),
-                      ),
-                      onPressed: () {}),
                   SizedBox(
-                    width: 1,
-                  ),
-                  Image.asset(
-                    "assets/images/wishlist.png",
-                    width: 30,
-                    height: 30,
-                  )
+                      width: 90,
+                      height: 30,
+                      child: RaisedButton(
+                          padding: EdgeInsets.all(10),
+                          color: Colors.orangeAccent,
+                          child: Text(
+                            "ADD TO CARD",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                          onPressed: () {})),
+                  AddFavoriteBooks(),
                 ])
               ],
             ),
           ))
         ]));
+  }
+}
+
+class AddFavoriteBooks extends StatefulWidget {
+  @override
+  AddFavoriteBooksState createState() => AddFavoriteBooksState();
+}
+
+class AddFavoriteBooksState extends State<AddFavoriteBooks> {
+  bool favirote = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: 30,
+        height: 30,
+        child: IconButton(
+            onPressed: () {
+              setState(() {
+                favirote = !favirote;
+              });
+            },
+            icon: favirote
+                ? Icon(
+                    Icons.favorite_rounded,
+                    color: Colors.orange,
+                  )
+                : Icon(
+                    Icons.favorite_outline,
+                    color: Colors.orange,
+                  )));
   }
 }
