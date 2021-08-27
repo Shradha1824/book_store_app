@@ -41,14 +41,14 @@ class Body extends StatelessWidget {
                         childAspectRatio: (110.0 / 220.0)),
                     itemBuilder: (context, index) => ItemCard(
                           books: books[index],
-                          press: () => Navigator.push(
+                          press: () { Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SingleBookPage(
                                         books: books[index],
-                                      ))),
-                        )))),
-      ],
+                                      )),
+                        );}))),
+        )],
     );
   }
 }
