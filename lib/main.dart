@@ -1,5 +1,6 @@
 import 'package:book_store_app/screens/otp.dart';
 import 'package:book_store_app/screens/signup.dart';
+import 'package:book_store_app/screens/single_book_details_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         initialRoute: 'home',
         routes: {
           '/home': (context) => Home(),
+          // '/single_book_details_screen': (context) => SingleBookPage(image: image, title: title, author: author, price: price)
           '/signup': (context) => SignUpPage(),
           '/login': (context) => LoginPage(),
           '/otp': (context) => OtpVerificationPage(""),
