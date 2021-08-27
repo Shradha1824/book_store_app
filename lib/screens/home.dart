@@ -27,7 +27,8 @@ class HomeState extends State<Home> {
                           hintText: "Search...",
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.horizontal()),
+                            borderRadius: BorderRadius.horizontal(),
+                          ),
                           prefixIcon: Icon(
                             Icons.search,
                             color: Colors.black,
