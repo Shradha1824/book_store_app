@@ -13,52 +13,56 @@ class Body extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(padding: EdgeInsets.all(10)),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text("Books",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              )),
-          dropDown(),
-        ]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Books",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  )),
+              DropDown(),
+            ]),
         SizedBox(
           height: kDefaultPadding,
         ),
         Expanded(
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                child: GridView.builder(
-                    itemCount: books.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: MediaQuery.of(context).orientation ==
-                                Orientation.landscape
-                            ? 3
-                            : 2,
-                        //crossAxisCount: 2,
-                        mainAxisSpacing: kDefaultPadding / 1.5,
-                        crossAxisSpacing: kDefaultPadding / 1.5,
-                        // crossAxisCount: orientation == Orientation.portrait ? 2 : 5,
-                        childAspectRatio: (110.0 / 220.0)),
-                    itemBuilder: (context, index) => ItemCard(
-                          books: books[index],
-                          press: () { Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SingleBookPage(
-                                        books: books[index],
-                                      )),
-                        );}))),
-        )],
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              child: GridView.builder(
+                  itemCount: books.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: MediaQuery.of(context).orientation ==
+                              Orientation.landscape
+                          ? 4
+                          : 2,
+                      mainAxisSpacing: kDefaultPadding / 1.5,
+                      crossAxisSpacing: kDefaultPadding / 1.5,
+                      childAspectRatio: (110.0 / 220.0)),
+                  itemBuilder: (context, index) => ItemCard(
+                      books: books[index],
+                      press: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SingleBookPage(
+                                    books: books[index],
+                                  )),
+                        );
+                      }))),
+        )
+      ],
     );
   }
 }
 
-class dropDown extends StatefulWidget {
+class DropDown extends StatefulWidget {
   @override
-  dropDownState createState() => dropDownState();
+  DropDownState createState() => DropDownState();
 }
 
-class dropDownState extends State<dropDown> {
+class DropDownState extends State<DropDown> {
   List<String> _relevence = [
     ' Price: Low to High',
     ' Price: High to Low',
