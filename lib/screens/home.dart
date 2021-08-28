@@ -40,9 +40,20 @@ class HomeState extends State<Home> {
                                       : Colors.grey.shade500))),
                     ))),
             SizedBox(
-              width: 13,
+              width: 10,
             ),
-            Icon(Icons.shopping_cart_outlined)
+            Card(
+                elevation: 6,
+                color: Colors.orangeAccent,
+                child: Icon(Icons.shopping_cart_outlined)),
+            SizedBox(
+              width: 10,
+            ),
+            Card(
+              elevation: 6,
+              color: Colors.orangeAccent,
+              child: Icon(Icons.favorite_outline),
+            )
           ],
         ),
         backgroundColor: Colors.orangeAccent,

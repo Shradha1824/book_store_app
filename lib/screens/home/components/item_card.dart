@@ -20,7 +20,10 @@ class ItemCard extends StatelessWidget {
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Expanded(
               child: Container(
-            padding: EdgeInsets.all(kDefaultPadding),
+            padding: EdgeInsets.only(
+                left: kDefaultPadding,
+                right: kDefaultPadding,
+                top: kDefaultPadding),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
@@ -30,7 +33,7 @@ class ItemCard extends StatelessWidget {
               children: [
                 Image.asset(books.image),
                 SizedBox(
-                  height: 2,
+                  height: 5,
                 ),
                 Text(books.title),
                 SizedBox(
@@ -42,7 +45,7 @@ class ItemCard extends StatelessWidget {
                 ),
                 Text("Rs. ${books.price}"),
                 SizedBox(
-                  height: 3,
+                  height: 10,
                 ),
                 Row(children: [
                   SizedBox(
@@ -78,8 +81,8 @@ class AddFavoriteBooksState extends State<AddFavoriteBooks> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: 30,
-        height: 30,
+        width: 35,
+        height: 40,
         child: IconButton(
             onPressed: () {
               setState(() {

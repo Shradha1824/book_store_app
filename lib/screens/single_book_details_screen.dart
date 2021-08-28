@@ -32,6 +32,19 @@ class SingleBookPage extends StatelessWidget {
                     Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text(
+                            "My Card (1)",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.w500),
+                          )
+                        ]),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                           Container(
                             height: 220,
                             width: 170,
