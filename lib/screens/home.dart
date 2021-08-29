@@ -1,5 +1,4 @@
 import 'package:book_store_app/screens/home/components/body.dart';
-import 'package:book_store_app/screens/single_book_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

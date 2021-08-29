@@ -1,5 +1,6 @@
 import 'package:book_store_app/constants.dart';
 import 'package:book_store_app/models/books.dart';
+import 'package:book_store_app/utils/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -60,13 +61,36 @@ class ItemCard extends StatelessWidget {
                               fontSize: 10,
                             ),
                           ),
-                          onPressed: () {})),
+                          onPressed: () async {
+                            await DataBase.addBooksToCard(
+                                    image: books.image,
+                                    title: books.title,
+                                    author: books.author,
+                                    price: books.price)
+                                .whenComplete(() => RaisedButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        "ADD TO CARD",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ));
+                          })),
                   AddFavoriteBooks(),
                 ])
               ],
             ),
           ))
         ]));
+  }
+
+  void addbookToWishlist() async {
+    await DataBase.addBooksToWishlist(
+        image: books.image,
+        title: books.title,
+        author: books.author,
+        price: books.price);
   }
 }
 

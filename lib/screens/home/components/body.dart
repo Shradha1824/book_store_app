@@ -1,7 +1,7 @@
 import 'package:book_store_app/constants.dart';
 import 'package:book_store_app/models/books.dart';
-import 'package:book_store_app/screens/home/components/item_card.dart';
-import 'package:book_store_app/screens/single_book_details_screen.dart';
+import 'package:book_store_app/screens/bookdetails/book_details.dart';
+import 'package:book_store_app/screens/home/components/bookview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -67,8 +67,8 @@ class DropDownState extends State<DropDown> {
     ' Price: Low to High',
     ' Price: High to Low',
     ' Newest Arrivals',
-  ]; // Option 2
-  String? _selectedLocation;
+  ];
+  String? _selectedrelevence;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -82,12 +82,15 @@ class DropDownState extends State<DropDown> {
           hint: Text(
             ' Sort by relevance   ',
             style: TextStyle(fontSize: 12),
-          ), // Not necessary for Option 1
-          value: _selectedLocation,
+          ),
+          value: _selectedrelevence,
           onChanged: (String? newValue) {
             setState(() {
-              _selectedLocation = newValue;
+              _selectedrelevence = newValue;
             });
+            if (newValue == ' Price: Low to High') {
+              priceLowToHigh(books);
+            }
           },
           items: _relevence.map((relevence) {
             return DropdownMenuItem(
@@ -100,5 +103,10 @@ class DropDownState extends State<DropDown> {
             );
           }).toList(),
         ));
+  }
+
+  void priceLowToHigh(price) {
+    books.sort((a, b) => a.price.compareTo(b.price));
+    print('Low to hight in price: $books');
   }
 }

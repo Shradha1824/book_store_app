@@ -2,9 +2,10 @@ import 'dart:ui';
 
 import 'package:book_store_app/constants.dart';
 import 'package:book_store_app/models/books.dart';
-import 'package:book_store_app/screens/details/components/card_counter.dart';
-import 'package:book_store_app/screens/place_order.dart';
+import 'package:book_store_app/screens/bookdetails/place_order.dart';
 import 'package:flutter/material.dart';
+
+import 'card_counter.dart';
 
 class SingleBookPage extends StatelessWidget {
   final Books books;

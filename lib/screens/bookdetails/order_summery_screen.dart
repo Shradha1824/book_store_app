@@ -1,10 +1,11 @@
 import 'dart:ui';
 
 import 'package:book_store_app/models/books.dart';
+import 'package:book_store_app/screens/bookdetails/order_placed_successfully.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-import 'details/components/card_counter.dart';
+import '../../constants.dart';
+import 'card_counter.dart';
 
 class OrderSummery extends StatelessWidget {
   final Books books;
@@ -322,10 +323,15 @@ class OrderSummery extends StatelessWidget {
                         ]),
                     RaisedButton(
                         color: Colors.orangeAccent,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OrderSuccessFully()));
+                        },
                         child: Text(
                           "CHECKOUT",
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(fontSize: 15, color: Colors.white),
                         )),
                   ]),
             )

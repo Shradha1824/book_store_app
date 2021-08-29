@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:book_store_app/screens/login%20.dart';
-import 'package:book_store_app/utils/firebase_crud.dart';
+import 'package:book_store_app/utils/firebase.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';

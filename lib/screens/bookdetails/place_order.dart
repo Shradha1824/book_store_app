@@ -1,11 +1,12 @@
 import 'dart:ui';
 
 import 'package:book_store_app/models/books.dart';
-import 'package:book_store_app/screens/order_summery_screen.dart';
+import 'package:book_store_app/screens/bookdetails/order_summery_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
-import 'details/components/card_counter.dart';
+import '../../constants.dart';
+import 'card_counter.dart';
 
 class PlaceOrder extends StatelessWidget {
   final Books books;
@@ -252,7 +253,7 @@ class PlaceOrder extends StatelessWidget {
                         },
                         child: Text(
                           "CONTINUE",
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(fontSize: 15, color: Colors.white),
                         ),
                       )
                     ])
@@ -339,4 +340,9 @@ class CircleState extends State<Circle> {
       ],
     );
   }
+
+  // void storeData()async{
+  //   SharedPreferences saveData = await SharedPreferences.getInstance();
+  //     saveData.setString(", downloadedUrl);
+  // }
 }
