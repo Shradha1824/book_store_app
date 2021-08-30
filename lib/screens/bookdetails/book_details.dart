@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'card_counter.dart';
 
 class SingleBookPage extends StatelessWidget {
-  final Books books;
+  final Books? books;
 
-  const SingleBookPage({Key? key, required this.books}) : super(key: key);
+  const SingleBookPage({Key? key, this.books}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +50,7 @@ class SingleBookPage extends StatelessWidget {
                             height: 220,
                             width: 170,
                             child: Image.asset(
-                              books.image,
+                              books!.image,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -64,7 +64,7 @@ class SingleBookPage extends StatelessWidget {
                                   height: kDefaultPadding,
                                 ),
                                 Text(
-                                  books.title,
+                                  books!.title,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black.withOpacity(0.8)),
@@ -73,7 +73,7 @@ class SingleBookPage extends StatelessWidget {
                                   height: kDefaultPadding,
                                 ),
                                 Text(
-                                  books.author,
+                                  books!.author,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black.withOpacity(0.8)),
@@ -82,7 +82,7 @@ class SingleBookPage extends StatelessWidget {
                                   height: kDefaultPadding,
                                 ),
                                 Text(
-                                  "Rs. ${books.price}",
+                                  "Rs. ${books!.price}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black.withOpacity(0.8)),
@@ -100,7 +100,7 @@ class SingleBookPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    PlaceOrder(books: books)));
+                                    PlaceOrder(books: books!)));
                       },
                       child: Text("PLACE ORDER",
                           style: TextStyle(

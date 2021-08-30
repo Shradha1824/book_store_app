@@ -78,6 +78,7 @@ class DropDownState extends State<DropDown> {
           border: Border.all(color: Colors.grey),
         ),
         child: DropdownButton(
+          underline: SizedBox(),
           iconSize: 25,
           hint: Text(
             ' Sort by relevance   ',
@@ -85,12 +86,12 @@ class DropDownState extends State<DropDown> {
           ),
           value: _selectedrelevence,
           onChanged: (String? newValue) {
+            if (newValue == ' Price: Low to High') {
+              BookScreen();
+            }
             setState(() {
               _selectedrelevence = newValue;
             });
-            if (newValue == ' Price: Low to High') {
-              priceLowToHigh(books);
-            }
           },
           items: _relevence.map((relevence) {
             return DropdownMenuItem(
@@ -104,9 +105,45 @@ class DropDownState extends State<DropDown> {
           }).toList(),
         ));
   }
+}
 
-  void priceLowToHigh(price) {
-    books.sort((a, b) => a.price.compareTo(b.price));
-    print('Low to hight in price: $books');
+class BookScreen extends StatefulWidget {
+  static bool title = false;
+  BookScreenState createState() => BookScreenState();
+}
+
+class BookScreenState extends State<BookScreen> {
+  List<Books> booksArranged = [];
+
+  filterByPrice(books) {
+    setState(() {
+      BookScreen.title = true;
+    });
+  }
+
+  SortPrice(books) {
+    books.sort((a, b) => a.compareTo(b));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: ListView.separated(
+            separatorBuilder: (context, index) {
+              return Divider();
+            },
+            itemCount: books.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                  title: Text(books[index].title),
+                  leading: Text(books[index].image),
+                  subtitle: Column(
+                    children: [
+                      !BookScreen.title
+                          ? Text("\Rs.${books[index].price}")
+                          : SortPrice(books[index].price),
+                    ],
+                  ));
+            }));
   }
 }
