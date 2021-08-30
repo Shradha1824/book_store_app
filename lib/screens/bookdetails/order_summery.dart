@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/screens/bookdetails/order_placed_successfully.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,36 +12,47 @@ import 'card_counter.dart';
 
 class OrderSummery extends StatefulWidget {
   final Books books;
-  final namesController;
-  final phoneController;
-  final pinCController;
-  final locController;
-  final addController;
-  final citysController;
-  final landController;
+  final String name;
+  final String phoneNo;
+  final String pincode;
+  final String locality;
+  final String address;
+  final String city;
+  final String landmark;
   const OrderSummery(
       {Key? key,
       required this.books,
-      required this.namesController,
-      required this.phoneController,
-      required this.pinCController,
-      required this.locController,
-      required this.addController,
-      required this.citysController,
-      required this.landController})
+      required this.name,
+      required this.phoneNo,
+      required this.pincode,
+      required this.locality,
+      required this.address,
+      required this.city,
+      required this.landmark})
       : super(key: key);
 
   OrderSummeryState createState() => OrderSummeryState();
 }
 
 class OrderSummeryState extends State<OrderSummery> {
-  final namesController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final pinCController = TextEditingController();
-  final locController = TextEditingController();
-  final addController = TextEditingController();
-  final citysController = TextEditingController();
-  final landController = TextEditingController();
+  final databaseReference = FirebaseFirestore.instance;
+  CollectionReference _collectionRef =
+      FirebaseFirestore.instance.collection('users');
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    print(allData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +158,16 @@ class OrderSummeryState extends State<OrderSummery> {
                                 color: Colors.black.withOpacity(0.7),
                                 fontSize: 15),
                           ),
-                          Text("Edit")
+                          RichText(
+                            text: TextSpan(
+                                text: 'Edit',
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.7),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => Navigator.pop(context)),
+                          )
                         ]),
                     SizedBox(
                       height: 10,
@@ -154,32 +176,26 @@ class OrderSummeryState extends State<OrderSummery> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
+                              padding: EdgeInsets.all(15),
                               height: 50,
                               width: width / 2.39,
-                              child: TextFormField(
-                              //  controller: namesController,
-                                decoration: InputDecoration(
-                                    hintText: "Name",
-                                    hintStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    border: OutlineInputBorder()),
-                              )),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border:
+                                      Border.all(color: Colors.grey.shade500)),
+                              child: Text(widget.name)),
                           SizedBox(
                             width: 10,
                           ),
                           Container(
+                              padding: EdgeInsets.all(15),
                               height: 50,
                               width: width / 2.39,
-                              child: TextFormField(
-                                controller: _phoneController,
-                                decoration: InputDecoration(
-                                    hintText: "Phone Number",
-                                    hintStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    border: OutlineInputBorder()),
-                              ))
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border:
+                                      Border.all(color: Colors.grey.shade500)),
+                              child: Text(widget.phoneNo)),
                         ]),
                     SizedBox(
                       height: 10,
@@ -188,49 +204,37 @@ class OrderSummeryState extends State<OrderSummery> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
+                              padding: EdgeInsets.all(15),
                               height: 50,
                               width: width / 2.39,
-                              child: TextFormField(
-                               // controller: pinCController,
-                                decoration: InputDecoration(
-                                    hintText: "Pincode",
-                                    hintStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    border: OutlineInputBorder()),
-                              )),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border:
+                                      Border.all(color: Colors.grey.shade500)),
+                              child: Text(widget.pincode)),
                           SizedBox(
                             width: 10,
                           ),
                           Container(
+                              padding: EdgeInsets.all(15),
                               height: 50,
                               width: width / 2.39,
-                              child: TextFormField(
-                               // controller: locController,
-                                decoration: InputDecoration(
-                                    hintText: "Locality",
-                                    hintStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    border: OutlineInputBorder()),
-                              ))
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border:
+                                      Border.all(color: Colors.grey.shade500)),
+                              child: Text(widget.locality)),
                         ]),
                     SizedBox(
                       height: 10,
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.all(15),
                       width: width,
                       height: 100,
-                      child: TextField(
-                         // controller: addController,
-                          decoration: InputDecoration(
-                              hintText: "Address",
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(
-                                fontSize: 15,
-                              ))),
+                      child: Text(widget.address),
                       decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
                           border: Border.all(color: Colors.grey.shade500)),
                     ),
                     SizedBox(
@@ -240,32 +244,26 @@ class OrderSummeryState extends State<OrderSummery> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
+                              padding: EdgeInsets.all(15),
                               height: 50,
                               width: width / 2.39,
-                              child: TextFormField(
-                               // controller: citysController,
-                                decoration: InputDecoration(
-                                    hintText: "city/town",
-                                    hintStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    border: OutlineInputBorder()),
-                              )),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border:
+                                      Border.all(color: Colors.grey.shade500)),
+                              child: Text(widget.city)),
                           SizedBox(
                             width: 10,
                           ),
                           Container(
+                              padding: EdgeInsets.all(15),
                               height: 50,
                               width: width / 2.39,
-                              child: TextFormField(
-                               // controller: landController,
-                                decoration: InputDecoration(
-                                    hintText: "Landmark",
-                                    hintStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    border: OutlineInputBorder()),
-                              ))
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border:
+                                      Border.all(color: Colors.grey.shade500)),
+                              child: Text(widget.landmark)),
                         ]),
                     SizedBox(
                       height: 10,
