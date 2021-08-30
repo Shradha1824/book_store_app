@@ -1,6 +1,18 @@
+import 'package:book_store_app/screens/home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class OrderSuccessFully extends StatefulWidget {
+  // final String email;
+  // final String phoneno;
+  // final String address;
+  // const OrderSuccessFully({
+  //   Key? key,
+  //   required this.phoneno,
+  //   required this.address,
+  //   required this.email,
+  // }) : super(key: key);
+
   @override
   OrderSuccessFullyState createState() => OrderSuccessFullyState();
 }
@@ -89,7 +101,10 @@ class OrderSuccessFullyState extends State<OrderSuccessFully> {
             ),
             RaisedButton(
               color: Colors.orangeAccent,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              },
               child: Text("CONTINUE SHOPPING",
                   style: TextStyle(color: Colors.white)),
             )
@@ -97,5 +112,22 @@ class OrderSuccessFullyState extends State<OrderSuccessFully> {
         ),
       ),
     );
+  }
+
+  Widget displayUserInf(BuildContext context) {
+    return new StreamBuilder(
+        stream:
+            FirebaseFirestore.instance.collection('users').doc().snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return new Text("Loading");
+          }
+          Map<String, dynamic>? data = snapshot.data as Map<String, dynamic>?;
+
+          // You can then retrieve the value from the Map like this:
+          var value = data?['firstName'];
+          print(data?['firstName']);
+          return Container();
+        });
   }
 }
