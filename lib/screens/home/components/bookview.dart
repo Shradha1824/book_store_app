@@ -1,10 +1,12 @@
 import 'package:book_store_app/constants.dart';
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/utils/firebase.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ItemCard extends StatelessWidget {
+class ItemCard extends StatefulWidget {
   final Books books;
   final press;
   const ItemCard({
@@ -13,10 +15,16 @@ class ItemCard extends StatelessWidget {
     required this.press,
   }) : super(key: key);
 
+  ItemCardState createState() => ItemCardState();
+}
+
+class ItemCardState extends State<ItemCard> {
+  bool favirote = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: press,
+        onTap: widget.press,
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Expanded(
@@ -32,19 +40,19 @@ class ItemCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(books.image),
+                Image.asset(widget.books.image),
                 SizedBox(
                   height: 5,
                 ),
-                Text(books.title),
+                Text(widget.books.title),
                 SizedBox(
                   height: 3,
                 ),
-                Text("by ${books.author}"),
+                Text("by ${widget.books.author}"),
                 SizedBox(
                   height: 3,
                 ),
-                Text("Rs. ${books.price}"),
+                Text("Rs. ${widget.books.price}"),
                 SizedBox(
                   height: 10,
                 ),
@@ -63,10 +71,10 @@ class ItemCard extends StatelessWidget {
                           ),
                           onPressed: () async {
                             await DataBase.addBooksToCard(
-                                    image: books.image,
-                                    title: books.title,
-                                    author: books.author,
-                                    price: books.price)
+                                    image: widget.books.image,
+                                    title: widget.books.title,
+                                    author: widget.books.author,
+                                    price: widget.books.price)
                                 .whenComplete(() => RaisedButton(
                                       onPressed: () {},
                                       child: Text(
@@ -77,7 +85,7 @@ class ItemCard extends StatelessWidget {
                                       ),
                                     ));
                           })),
-                  AddFavoriteBooks(),
+                  wishlist(context)
                 ])
               ],
             ),
@@ -85,30 +93,19 @@ class ItemCard extends StatelessWidget {
         ]));
   }
 
-  void addbookToWishlist() async {
-    await DataBase.addBooksToWishlist(
-        image: books.image,
-        title: books.title,
-        author: books.author,
-        price: books.price);
-  }
-}
-
-class AddFavoriteBooks extends StatefulWidget {
-  @override
-  AddFavoriteBooksState createState() => AddFavoriteBooksState();
-}
-
-class AddFavoriteBooksState extends State<AddFavoriteBooks> {
-  bool favirote = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget wishlist(BuildContext context) {
     return SizedBox(
         width: 35,
         height: 40,
         child: IconButton(
-            onPressed: () {
+            onPressed: () async {
+              if (favirote == false) {
+                await DataBase.addBooksToWishlist(
+                    image: widget.books.image,
+                    title: widget.books.title,
+                    author: widget.books.author,
+                    price: widget.books.price);
+              }
               setState(() {
                 favirote = !favirote;
               });
