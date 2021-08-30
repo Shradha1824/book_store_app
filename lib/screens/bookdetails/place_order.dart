@@ -8,10 +8,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
 import 'card_counter.dart';
 
-class PlaceOrder extends StatelessWidget {
+class PlaceOrder extends StatefulWidget {
   final Books books;
 
   const PlaceOrder({Key? key, required this.books}) : super(key: key);
+
+  PlaceOrderState createState() => PlaceOrderState();
+}
+
+class PlaceOrderState extends State<PlaceOrder> {
+  String? _customerName;
+  String? _customerPn;
+  String? _customerPin;
+  String? _customerLoc;
+  String? _customerAdd;
+  String? _customerCity;
+  String? _customerLand;
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneNoController = TextEditingController();
+  TextEditingController _pinCodeController = TextEditingController();
+  TextEditingController _localityController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _cityController = TextEditingController();
+  TextEditingController _landmarkController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -52,7 +72,7 @@ class PlaceOrder extends StatelessWidget {
                             height: 220,
                             width: 170,
                             child: Image.asset(
-                              books.image,
+                              widget.books.image,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -66,7 +86,7 @@ class PlaceOrder extends StatelessWidget {
                                   height: kDefaultPadding,
                                 ),
                                 Text(
-                                  books.title,
+                                  widget.books.title,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black.withOpacity(0.8)),
@@ -75,7 +95,7 @@ class PlaceOrder extends StatelessWidget {
                                   height: kDefaultPadding,
                                 ),
                                 Text(
-                                  books.author,
+                                  widget.books.author,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black.withOpacity(0.8)),
@@ -84,7 +104,7 @@ class PlaceOrder extends StatelessWidget {
                                   height: kDefaultPadding,
                                 ),
                                 Text(
-                                  "Rs. ${books.price}",
+                                  "Rs. ${widget.books.price}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black.withOpacity(0.8)),
@@ -125,6 +145,7 @@ class PlaceOrder extends StatelessWidget {
                               height: 50,
                               width: width / 2.39,
                               child: TextFormField(
+                                controller: _nameController,
                                 decoration: InputDecoration(
                                     hintText: "Name",
                                     hintStyle: TextStyle(
@@ -139,6 +160,7 @@ class PlaceOrder extends StatelessWidget {
                               height: 50,
                               width: width / 2.39,
                               child: TextFormField(
+                                controller: _phoneNoController,
                                 decoration: InputDecoration(
                                     hintText: "Phone Number",
                                     hintStyle: TextStyle(
@@ -157,6 +179,7 @@ class PlaceOrder extends StatelessWidget {
                               height: 50,
                               width: width / 2.39,
                               child: TextFormField(
+                                controller: _pinCodeController,
                                 decoration: InputDecoration(
                                     hintText: "Pincode",
                                     hintStyle: TextStyle(
@@ -171,6 +194,7 @@ class PlaceOrder extends StatelessWidget {
                               height: 50,
                               width: width / 2.39,
                               child: TextFormField(
+                                controller: _localityController,
                                 decoration: InputDecoration(
                                     hintText: "Locality",
                                     hintStyle: TextStyle(
@@ -187,6 +211,7 @@ class PlaceOrder extends StatelessWidget {
                       width: width,
                       height: 100,
                       child: TextField(
+                          controller: _addressController,
                           decoration: InputDecoration(
                               hintText: "Address",
                               border: InputBorder.none,
@@ -206,6 +231,7 @@ class PlaceOrder extends StatelessWidget {
                               height: 50,
                               width: width / 2.39,
                               child: TextFormField(
+                                controller: _cityController,
                                 decoration: InputDecoration(
                                     hintText: "city/town",
                                     hintStyle: TextStyle(
@@ -220,6 +246,7 @@ class PlaceOrder extends StatelessWidget {
                               height: 50,
                               width: width / 2.39,
                               child: TextFormField(
+                                controller: _landmarkController,
                                 decoration: InputDecoration(
                                     hintText: "Landmark",
                                     hintStyle: TextStyle(
@@ -245,11 +272,22 @@ class PlaceOrder extends StatelessWidget {
                       RaisedButton(
                         color: Colors.orangeAccent,
                         onPressed: () {
+                          //saveAddress();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      OrderSummery(books: books)));
+                                  builder: (context) => OrderSummery(
+                                        books: widget.books,
+                                        namesController: _nameController.text,
+                                        phoneController:
+                                            _phoneNoController.text,
+                                        pinCController: _pinCodeController.text,
+                                        locController: _localityController.text,
+                                        addController: _addressController.text,
+                                        citysController: _cityController.text,
+                                        landController:
+                                            _landmarkController.text,
+                                      )));
                         },
                         child: Text(
                           "CONTINUE",
@@ -282,6 +320,28 @@ class PlaceOrder extends StatelessWidget {
             ),
           ]),
         ])));
+  }
+
+  void saveAddress() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("name", _nameController.text);
+    sharedPreferences.setString("phoneNumber", _phoneNoController.text);
+    sharedPreferences.setString("pincode", _pinCodeController.text);
+    sharedPreferences.setString("locality", _localityController.text);
+    sharedPreferences.setString("address", _addressController.text);
+    sharedPreferences.setString("city", _cityController.text);
+    sharedPreferences.setString("landmark", _landmarkController.text);
+    setState(() {
+      _customerName = sharedPreferences.getString("name");
+      _customerPn = sharedPreferences.getString("phoneNumber");
+      _customerPin = sharedPreferences.getString("pincode");
+      _customerLoc = sharedPreferences.getString("locality");
+      _customerAdd = sharedPreferences.getString("address");
+      _customerCity = sharedPreferences.getString("city");
+      _customerLand = sharedPreferences.getString("landmark");
+    });
+    print('address saved');
+    print(sharedPreferences.getString("name"));
   }
 }
 
