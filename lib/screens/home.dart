@@ -1,3 +1,4 @@
+import 'package:book_store_app/constance/body_screen.dart';
 import 'package:book_store_app/screens/home/components/body.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class HomeState extends State<Home> {
             Card(
               elevation: 6,
               color: Colors.orangeAccent,
-              child: Icon(Icons.favorite_outline),
+              child: Icon(Icons.favorite_outline)
             )
           ],
         ),
