@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:book_store_app/models/books.dart';
-import 'package:book_store_app/screens/bookdetails/order_summery_screen.dart';
+import 'package:book_store_app/screens/bookdetails/order_summery.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
