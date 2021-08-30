@@ -278,15 +278,13 @@ class PlaceOrderState extends State<PlaceOrder> {
                               MaterialPageRoute(
                                   builder: (context) => OrderSummery(
                                         books: widget.books,
-                                        namesController: _nameController.text,
-                                        phoneController:
-                                            _phoneNoController.text,
-                                        pinCController: _pinCodeController.text,
-                                        locController: _localityController.text,
-                                        addController: _addressController.text,
-                                        citysController: _cityController.text,
-                                        landController:
-                                            _landmarkController.text,
+                                        name: _nameController.text,
+                                        phoneNo: _phoneNoController.text,
+                                        pincode: _pinCodeController.text,
+                                        locality: _localityController.text,
+                                        address: _addressController.text,
+                                        city: _cityController.text,
+                                        landmark: _landmarkController.text,
                                       )));
                         },
                         child: Text(
