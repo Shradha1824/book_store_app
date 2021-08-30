@@ -1,9 +1,9 @@
+import 'package:book_store_app/constance/book_display.dart';
 import 'package:book_store_app/screens/otp.dart';
 import 'package:book_store_app/screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens/home.dart';
 import 'screens/login .dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         home: Home(),
         initialRoute: 'home',
         routes: {
-          '/home': (context) => Home(),
+          '/book_display': (context) => HomePage(),
           '/signup': (context) => SignUpPage(),
           '/login': (context) => LoginPage(),
           '/otp': (context) => OtpVerificationPage(""),
