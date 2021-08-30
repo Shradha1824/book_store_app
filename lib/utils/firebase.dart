@@ -45,10 +45,10 @@ class DataBase {
       "price": price
     };
 
-      await documentReference
-          .set(data)
-          .whenComplete(() => print("Book added in Card"))
-          .catchError((e) => print(e));
+    await documentReference
+        .set(data)
+        .whenComplete(() => print("Book added in Card"))
+        .catchError((e) => print(e));
   }
 
   static Future<void> addBooksToWishlist({
@@ -69,6 +69,17 @@ class DataBase {
     await documentReference
         .set(data)
         .whenComplete(() => print("Book added in wishlist"))
+        .catchError((e) => print(e));
+  }
+
+  static Future<void> deleteItem({
+    required String docId,
+  }) async {
+    DocumentReference documentReferencer = _favBooksCollection.doc(docId);
+
+    await documentReferencer
+        .delete()
+        .whenComplete(() => print('Note item deleted from the database'))
         .catchError((e) => print(e));
   }
 }
