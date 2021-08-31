@@ -2,8 +2,11 @@ import 'dart:ui';
 
 import 'package:book_store_app/screens/otp.dart';
 import 'package:book_store_app/screens/signup.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:phone_number/phone_number.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
@@ -114,9 +117,29 @@ class LoginPageState extends State<LoginPage> {
             FlatButton(
               onPressed: () {
                 NumberValidate("");
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) =>
-                        OtpVerificationPage(_controller.text)));
+                String phoneNumber = _controller.text;
+                FirebaseFirestore.instance
+                    .collection('users')
+                    .get()
+                    .then((QuerySnapshot querySnapshot) {
+                  querySnapshot.docs.forEach((docs) async {
+                    if (docs['phoneNo'] == _controller.text) {
+                      print("Login Successfully");
+                    } else {
+                      print("First you need to register");
+                    }
+                    if (phoneNumber != null) {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString('phoneNumber', phoneNumber);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) =>
+                              OtpVerificationPage(_controller.text)));
+                    } else {
+                      print("Give your phone number");
+                    }
+                  });
+                });
               },
               child: Container(
                 width: 260,
