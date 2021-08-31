@@ -91,7 +91,7 @@ class SingleBookPage extends StatelessWidget {
                                   height: kDefaultPadding,
                                 ),
                                 CardCounter()
-                                //Text(title),
+                                
                               ])
                         ]),
                     RaisedButton(
