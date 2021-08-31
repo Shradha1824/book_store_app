@@ -4,20 +4,25 @@ import 'package:flutter/material.dart';
 
 class OrderSuccessFully extends StatefulWidget {
   // final String email;
-  // final String phoneno;
-  // final String address;
-  // const OrderSuccessFully({
-  //   Key? key,
-  //   required this.phoneno,
-  //   required this.address,
-  //   required this.email,
-  // }) : super(key: key);
+  final String phoneno;
+  final String address;
+  const OrderSuccessFully({
+    Key? key,
+    required this.phoneno,
+    required this.address,
+    //   required this.email,
+  }) : super(key: key);
 
   @override
   OrderSuccessFullyState createState() => OrderSuccessFullyState();
 }
 
 class OrderSuccessFullyState extends State<OrderSuccessFully> {
+  void initState() {
+    super.initState();
+    getDocument();
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -28,8 +33,34 @@ class OrderSuccessFullyState extends State<OrderSuccessFully> {
       body: SingleChildScrollView(
         child: Container(
           child: Column(children: [
+            Padding(padding: EdgeInsets.only(left: 10)),
             SizedBox(
-              height: 300,
+              height: 200,
+            ),
+            Column(
+              children: [
+                Text("Order Placed Successfully",
+                    style:
+                        TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  "hurry!!! your order is confirmed",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                ),
+                Text(
+                  "the order id is #123456 save the order id for",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                ),
+                Text(
+                  "further communication...",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 20,
             ),
             Row(children: [
               Container(
@@ -83,7 +114,7 @@ class OrderSuccessFullyState extends State<OrderSuccessFully> {
                   width: width / 3.2,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade500)),
-                  child: Text("+91-8722893756"),
+                  child: Text(widget.phoneno),
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 10),
@@ -91,8 +122,7 @@ class OrderSuccessFullyState extends State<OrderSuccessFully> {
                   width: width / 3.2,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade500)),
-                  child:
-                      Text("42,14th Main Road near Hanuman Temple, Benglore"),
+                  child: Text(widget.address),
                 ),
                 SizedBox(
                   width: 10,
@@ -114,20 +144,15 @@ class OrderSuccessFullyState extends State<OrderSuccessFully> {
     );
   }
 
-  Widget displayUserInf(BuildContext context) {
-    return new StreamBuilder(
-        stream:
-            FirebaseFirestore.instance.collection('users').doc().snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return new Text("Loading");
-          }
-          Map<String, dynamic>? data = snapshot.data as Map<String, dynamic>?;
-
-          // You can then retrieve the value from the Map like this:
-          var value = data?['firstName'];
-          print(data?['firstName']);
-          return Container();
-        });
+  getDocument() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc["phoneNo"]);
+        print(doc.id);
+      });
+    });
   }
 }
