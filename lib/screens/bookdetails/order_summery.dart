@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/screens/bookdetails/order_placed_successfully.dart';
+import 'package:book_store_app/utils/firebase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class OrderSummeryState extends State<OrderSummery> {
   void initState() {
     super.initState();
     getData();
+    getDocument();
   }
 
   Future<void> getData() async {
@@ -358,12 +360,16 @@ class OrderSummeryState extends State<OrderSummery> {
                         ]),
                     RaisedButton(
                         color: Colors.orangeAccent,
-                        onPressed: () {
+                        onPressed: () async {
+                          await DataBase.readItem();
                           // saveAddress();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OrderSuccessFully()));
+                                  builder: (context) => OrderSuccessFully(
+                                        address: widget.address,
+                                        phoneno: widget.phoneNo,
+                                      )));
                         },
                         child: Text(
                           "CHECKOUT",
@@ -373,6 +379,18 @@ class OrderSummeryState extends State<OrderSummery> {
             )
           ])
         ])));
+  }
+
+  getDocument() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) async {
+        print(doc["phoneNo"]);
+        print(doc.id);
+      });
+    });
   }
 }
 
