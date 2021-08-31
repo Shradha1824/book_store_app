@@ -4,12 +4,17 @@ import 'package:book_store_app/screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens/home.dart';
 import 'screens/login .dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var phoneNumber = prefs.getString('phoneNumber');
+  print("Logged user number $phoneNumber");
+  runApp(MaterialApp(home: phoneNumber == null ? LoginPage() : Home()));
   await Firebase.initializeApp();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
