@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/screens/bookdetails/order_summery.dart';
+import 'package:book_store_app/utils/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,6 +33,7 @@ class PlaceOrderState extends State<PlaceOrder> {
   TextEditingController _addressController = TextEditingController();
   TextEditingController _cityController = TextEditingController();
   TextEditingController _landmarkController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -271,7 +273,15 @@ class PlaceOrderState extends State<PlaceOrder> {
                     Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                       RaisedButton(
                         color: Colors.orangeAccent,
-                        onPressed: () {
+                        onPressed: () async {
+                          await DataBase.addCustomerDetails(
+                              name: _nameController.text,
+                              phoneno: _phoneNoController.text,
+                              pincode: _pinCodeController.text,
+                              locality: _localityController.text,
+                              address: _addressController.text,
+                              city: _cityController.text,
+                              landmark: _landmarkController.text);
                           //saveAddress();
                           Navigator.push(
                               context,
@@ -398,9 +408,4 @@ class CircleState extends State<Circle> {
       ],
     );
   }
-
-  // void storeData()async{
-  //   SharedPreferences saveData = await SharedPreferences.getInstance();
-  //     saveData.setString(", downloadedUrl);
-  // }
 }

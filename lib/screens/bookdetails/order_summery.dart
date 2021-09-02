@@ -36,6 +36,8 @@ class OrderSummery extends StatefulWidget {
 }
 
 class OrderSummeryState extends State<OrderSummery> {
+  String? phoneNumber;
+
   final databaseReference = FirebaseFirestore.instance;
   CollectionReference _collectionRef =
       FirebaseFirestore.instance.collection('users');
@@ -45,6 +47,7 @@ class OrderSummeryState extends State<OrderSummery> {
     super.initState();
     getData();
     getDocument();
+    getLoginData();
   }
 
   Future<void> getData() async {
@@ -54,6 +57,15 @@ class OrderSummeryState extends State<OrderSummery> {
     // Get data from docs and convert map to List
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
     print(allData);
+  }
+
+  void getLoginData() async {
+    var prefs = await SharedPreferences.getInstance();
+    setState(() {
+      phoneNumber = prefs.getString('phoneNumber')!;
+      print("=========================================");
+      print('phoneNumber: $phoneNumber');
+    });
   }
 
   @override
@@ -368,7 +380,7 @@ class OrderSummeryState extends State<OrderSummery> {
                               MaterialPageRoute(
                                   builder: (context) => OrderSuccessFully(
                                         address: widget.address,
-                                        phoneno: widget.phoneNo,
+                                        phoneno: '$phoneNumber',
                                       )));
                         },
                         child: Text(
@@ -387,7 +399,7 @@ class OrderSummeryState extends State<OrderSummery> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) async {
-        print(doc["phoneNo"]);
+        print(doc["EmailId"]);
         print(doc.id);
       });
     });

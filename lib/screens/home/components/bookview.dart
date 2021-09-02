@@ -4,7 +4,6 @@ import 'package:book_store_app/utils/firebase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemCard extends StatefulWidget {
   final Books books;
@@ -71,19 +70,11 @@ class ItemCardState extends State<ItemCard> {
                           ),
                           onPressed: () async {
                             await DataBase.addBooksToCard(
-                                    image: widget.books.image,
-                                    title: widget.books.title,
-                                    author: widget.books.author,
-                                    price: widget.books.price)
-                                .whenComplete(() => RaisedButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        "ADD TO CARD",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ));
+                                image: widget.books.image,
+                                title: widget.books.title,
+                                author: widget.books.author,
+                                price: widget.books.price,
+                                wishlist: favirote);
                           })),
                   wishlist(context)
                 ])
@@ -98,14 +89,7 @@ class ItemCardState extends State<ItemCard> {
         width: 35,
         height: 40,
         child: IconButton(
-            onPressed: () async {
-              if (favirote == false) {
-                await DataBase.addBooksToWishlist(
-                    image: widget.books.image,
-                    title: widget.books.title,
-                    author: widget.books.author,
-                    price: widget.books.price);
-              }
+            onPressed: () {
               setState(() {
                 favirote = !favirote;
               });

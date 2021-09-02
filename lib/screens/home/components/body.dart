@@ -2,6 +2,7 @@ import 'package:book_store_app/constants.dart';
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/screens/bookdetails/book_details.dart';
 import 'package:book_store_app/screens/home/components/bookview.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,21 +10,21 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(padding: EdgeInsets.all(10)),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Books",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  )),
-              DropDown(),
-            ]),
+        Padding(padding: EdgeInsets.only(top: 10, bottom: 10)),
+        Container(
+            margin:
+                EdgeInsets.only(left: kDefaultPadding, right: kDefaultPadding),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Books",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      )),
+                  DropDown(),
+                ])),
         SizedBox(
           height: kDefaultPadding,
         ),

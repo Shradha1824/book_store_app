@@ -1,4 +1,5 @@
 import 'package:book_store_app/constance/book_display.dart';
+import 'package:book_store_app/screens/bookdetails/add_to_card.dart';
 import 'package:book_store_app/screens/otp.dart';
 import 'package:book_store_app/screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         home: Home(),
         initialRoute: 'home',
         routes: {
-          '/book_display': (context) => HomePage(),
+          '/home': (context) => Home(),
           '/signup': (context) => SignUpPage(),
           '/login': (context) => LoginPage(),
           '/otp': (context) => OtpVerificationPage(""),
