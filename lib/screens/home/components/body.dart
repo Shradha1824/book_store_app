@@ -2,9 +2,9 @@ import 'package:book_store_app/constants.dart';
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/screens/bookdetails/book_details.dart';
 import 'package:book_store_app/screens/home/components/bookview.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -87,21 +87,18 @@ class DropDownState extends State<DropDown> {
           ),
           value: _selectedrelevence,
           onChanged: (String? newValue) {
-            if (newValue == ' Price: Low to High') {
-              BookScreen();
-            }
             setState(() {
               _selectedrelevence = newValue;
             });
           },
-          items: _relevence.map((relevence) {
+          items: _relevence.map((books) {
             return DropdownMenuItem(
               child: Text(
-                relevence,
+                books,
                 style: TextStyle(fontSize: 12),
                 textAlign: TextAlign.left,
               ),
-              value: relevence,
+              value: books,
             );
           }).toList(),
         ));
