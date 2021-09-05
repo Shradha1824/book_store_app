@@ -19,6 +19,7 @@ class ItemCard extends StatefulWidget {
 
 class ItemCardState extends State<ItemCard> {
   bool favirote = false;
+  int numberOfWish = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -70,11 +71,13 @@ class ItemCardState extends State<ItemCard> {
                           ),
                           onPressed: () async {
                             await DataBase.addBooksToCard(
-                                image: widget.books.image,
-                                title: widget.books.title,
-                                author: widget.books.author,
-                                price: widget.books.price,
-                                wishlist: favirote);
+                                    image: widget.books.image,
+                                    title: widget.books.title,
+                                    author: widget.books.author,
+                                    price: widget.books.price,
+                                    wishlist: favirote)
+                                .whenComplete(() => showInSnackBar(
+                                    "Book added in shopping card"));
                           })),
                   wishlist(context)
                 ])
@@ -82,6 +85,10 @@ class ItemCardState extends State<ItemCard> {
             ),
           ))
         ]));
+  }
+
+  void showInSnackBar(String value) {
+    Scaffold.of(context).showSnackBar(new SnackBar(content: new Text(value)));
   }
 
   Widget wishlist(BuildContext context) {
@@ -92,6 +99,7 @@ class ItemCardState extends State<ItemCard> {
             onPressed: () {
               setState(() {
                 favirote = !favirote;
+                numberOfWish++;
               });
             },
             icon: favirote
