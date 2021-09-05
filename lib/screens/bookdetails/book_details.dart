@@ -10,7 +10,10 @@ import 'card_counter.dart';
 class SingleBookPage extends StatelessWidget {
   final Books? books;
 
-  const SingleBookPage({Key? key, this.books}) : super(key: key);
+  const SingleBookPage({
+    Key? key,
+    this.books,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +94,6 @@ class SingleBookPage extends StatelessWidget {
                                   height: kDefaultPadding,
                                 ),
                                 CardCounter()
-                                
                               ])
                         ]),
                     RaisedButton(
