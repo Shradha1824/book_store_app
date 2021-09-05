@@ -78,11 +78,4 @@ class DataBase {
         .whenComplete(() => print("Book added in Card"))
         .catchError((e) => print(e));
   }
-
-  static Stream<QuerySnapshot> readItem() {
-    CollectionReference noteItemCollection =
-        _mainCollection.doc(uid).collection('users');
-
-    return noteItemCollection.snapshots();
-  }
 }
