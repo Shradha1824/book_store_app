@@ -54,7 +54,9 @@ class _AddToCardState extends State<AddToCard> {
               children: [
                 //CardCounters(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   icon: Icon(Icons.shopping_cart_outlined),
                 ),
                 IconButton(onPressed: () {}, icon: Icon(Icons.favorite_outline))
@@ -80,8 +82,9 @@ class _AddToCardState extends State<AddToCard> {
                     child: InkWell(
                       child: Container(
                           padding: EdgeInsets.all(15),
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.all(kDefaultPadding),
                           decoration: BoxDecoration(
+                              color: Colors.white,
                               border: Border.all(
                                   color: Colors.black54.withOpacity(0.2)),
                               borderRadius: BorderRadius.circular(10),
@@ -98,7 +101,7 @@ class _AddToCardState extends State<AddToCard> {
                                 Container(
                                   height: 220,
                                   width: 170,
-                                  child: Image.asset(
+                                  child: Image.network(
                                     doc['image'],
                                     fit: BoxFit.fill,
                                   ),
@@ -147,14 +150,6 @@ class _AddToCardState extends State<AddToCard> {
                                       //Text(title),
                                     ])
                               ])),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            (MaterialPageRoute(
-                                builder: (context) => SingleBookPage(
-                                      books: books[index],
-                                    ))));
-                      },
                     ));
               }).toList(),
             );
