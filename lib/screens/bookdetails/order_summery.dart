@@ -372,8 +372,7 @@ class OrderSummeryState extends State<OrderSummery> {
                         ]),
                     RaisedButton(
                         color: Colors.orangeAccent,
-                        onPressed: () async {
-                          await DataBase.readItem();
+                        onPressed: () {
                           // saveAddress();
                           Navigator.push(
                               context,
