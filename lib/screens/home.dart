@@ -1,6 +1,7 @@
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/screens/bookdetails/add_to_card.dart';
 import 'package:book_store_app/screens/home/components/body.dart';
+import 'package:book_store_app/screens/home/components/high_to_low_relevance.dart';
 import 'package:book_store_app/utils/firebase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,12 @@ class HomeState extends State<Home> {
   int numOfItem = 0;
   int numberOfWish = 0;
   SharedPreferences? _preferences;
+  List<String> _relevence = [
+    ' Price: Low to High',
+    ' Price: High to Low',
+    ' Newest Arrivals',
+  ];
+  String? _selectedrelevence;
 
   var searchString;
   bool _searchView = false;
@@ -37,6 +44,17 @@ class HomeState extends State<Home> {
     setState(() {
       numOfItem = _preferance.getInt('numOfItem')!;
     });
+  }
+
+  changeView() {
+    if (_searchView == true) {
+      return LowToHigh();
+    }
+    if (_searchView == true && _selectedrelevence == _relevence[1]) {
+      return HighToLowRel();
+    } else {
+      return Body();
+    }
   }
 
   @override
@@ -132,9 +150,38 @@ class HomeState extends State<Home> {
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 )),
-            DropDown(),
+            Container(
+                width: 140,
+                height: 30,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: DropdownButton(
+                  underline: SizedBox(),
+                  iconSize: 25,
+                  hint: Text(
+                    ' Sort by relevance   ',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  value: _selectedrelevence,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedrelevence = newValue;
+                    });
+                  },
+                  items: _relevence.map((relevence) {
+                    return DropdownMenuItem(
+                      child: Text(
+                        relevence,
+                        style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.left,
+                      ),
+                      value: relevence,
+                    );
+                  }).toList(),
+                ))
           ])),
-      // if (searchString == true)
+      // if (_selectedrelevence == _relevence[0])
       Expanded(
           child: StreamBuilder<QuerySnapshot>(
         //pass 'Stream<QuerySnapshot>' to stream
@@ -227,16 +274,8 @@ class HomeState extends State<Home> {
             }).toList(),
           );
         },
-      ))
+      )),
     ]);
-  }
-
-  changeView() {
-    if (_searchView == true) {
-      return searchBooks();
-    } else {
-      return Body();
-    }
   }
 
   Widget _addtocard() {
@@ -319,50 +358,50 @@ class HomeState extends State<Home> {
   }
 }
 
-class DropDown extends StatefulWidget {
-  @override
-  DropDownState createState() => DropDownState();
-}
+// class DropDown extends StatefulWidget {
+//   @override
+//   DropDownState createState() => DropDownState();
+// }
 
-class DropDownState extends State<DropDown> {
-  List<String> _relevence = [
-    ' Price: Low to High',
-    ' Price: High to Low',
-    ' Newest Arrivals',
-  ];
-  String? _selectedrelevence;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: 140,
-        height: 30,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-        ),
-        child: DropdownButton(
-          underline: SizedBox(),
-          iconSize: 25,
-          hint: Text(
-            ' Sort by relevance   ',
-            style: TextStyle(fontSize: 12),
-          ),
-          value: _selectedrelevence,
-          onChanged: (String? newValue) {
-            books.sort();
-            setState(() {
-              _selectedrelevence = newValue;
-            });
-          },
-          items: _relevence.map((relevence) {
-            return DropdownMenuItem(
-              child: Text(
-                relevence,
-                style: TextStyle(fontSize: 12),
-                textAlign: TextAlign.left,
-              ),
-              value: relevence,
-            );
-          }).toList(),
-        ));
-  }
-}
+// class DropDownState extends State<DropDown> {
+//   List<String> _relevence = [
+//     ' Price: Low to High',
+//     ' Price: High to Low',
+//     ' Newest Arrivals',
+//   ];
+//   String? _selectedrelevence;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//         width: 140,
+//         height: 30,
+//         decoration: BoxDecoration(
+//           border: Border.all(color: Colors.grey),
+//         ),
+//         child: DropdownButton(
+//           underline: SizedBox(),
+//           iconSize: 25,
+//           hint: Text(
+//             ' Sort by relevance   ',
+//             style: TextStyle(fontSize: 12),
+//           ),
+//           value: _selectedrelevence,
+//           onChanged: (String? newValue) {
+//             books.sort();
+//             setState(() {
+//               _selectedrelevence = newValue;
+//             });
+//           },
+//           items: _relevence.map((relevence) {
+//             return DropdownMenuItem(
+//               child: Text(
+//                 relevence,
+//                 style: TextStyle(fontSize: 12),
+//                 textAlign: TextAlign.left,
+//               ),
+//               value: relevence,
+//             );
+//           }).toList(),
+//         ));
+//   }
+// }
