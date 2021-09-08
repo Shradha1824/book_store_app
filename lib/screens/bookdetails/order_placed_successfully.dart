@@ -6,12 +6,17 @@ class OrderSuccessFully extends StatefulWidget {
   // final String email;
   final String phoneno;
   final String address;
-  const OrderSuccessFully({
-    Key? key,
-    required this.phoneno,
-    required this.address,
-    //   required this.email,
-  }) : super(key: key);
+  final String text;
+  final String docId;
+  const OrderSuccessFully(
+      {Key? key,
+      required this.phoneno,
+      required this.address,
+      required this.text,
+      required this.docId
+      //   required this.email,
+      })
+      : super(key: key);
 
   @override
   OrderSuccessFullyState createState() => OrderSuccessFullyState();
@@ -50,7 +55,12 @@ class OrderSuccessFullyState extends State<OrderSuccessFully> {
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
                 ),
                 Text(
-                  "the order id is #123456 save the order id for",
+                  "the order id is",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                ),
+                RichText(text: TextSpan(text: "# ${widget.docId}", style: TextStyle(fontSize: 15, color: Colors.orange))),
+                Text(
+                  "save the order id for",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
                 ),
                 Text(
@@ -107,7 +117,7 @@ class OrderSuccessFullyState extends State<OrderSuccessFully> {
                     width: width / 3.2,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey.shade500)),
-                    child: Text("admin@bookstore.com")),
+                    child: Text(widget.text)),
                 Container(
                   padding: EdgeInsets.only(top: 10),
                   height: 80,
