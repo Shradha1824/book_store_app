@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/screens/bookdetails/order_summery.dart';
 import 'package:book_store_app/utils/firebase.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +19,10 @@ class PlaceOrder extends StatefulWidget {
 }
 
 class PlaceOrderState extends State<PlaceOrder> {
+  final databaseReference = FirebaseFirestore.instance;
+  CollectionReference _collectionRef =
+      FirebaseFirestore.instance.collection('users');
+  String? phoneNumber;
   String? _customerName;
   String? _customerPn;
   String? _customerPin;
@@ -33,6 +38,30 @@ class PlaceOrderState extends State<PlaceOrder> {
   TextEditingController _addressController = TextEditingController();
   TextEditingController _cityController = TextEditingController();
   TextEditingController _landmarkController = TextEditingController();
+
+  void initState() {
+    super.initState();
+    getUserEmail();
+    getLoginData();
+  }
+
+  Future<void> getUserCollection() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    print(allData);
+  }
+
+  void getLoginData() async {
+    var prefs = await SharedPreferences.getInstance();
+    setState(() {
+      phoneNumber = prefs.getString('phoneNumber')!;
+      print("=========================================");
+      print('phoneNumber: $phoneNumber');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -274,28 +303,42 @@ class PlaceOrderState extends State<PlaceOrder> {
                       RaisedButton(
                         color: Colors.orangeAccent,
                         onPressed: () async {
-                          await DataBase.addCustomerDetails(
-                              name: _nameController.text,
-                              phoneno: _phoneNoController.text,
-                              pincode: _pinCodeController.text,
-                              locality: _localityController.text,
-                              address: _addressController.text,
-                              city: _cityController.text,
-                              landmark: _landmarkController.text);
-                          //saveAddress();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OrderSummery(
-                                        books: widget.books,
-                                        name: _nameController.text,
-                                        phoneNo: _phoneNoController.text,
-                                        pincode: _pinCodeController.text,
-                                        locality: _localityController.text,
-                                        address: _addressController.text,
-                                        city: _cityController.text,
-                                        landmark: _landmarkController.text,
-                                      )));
+                          FirebaseFirestore.instance
+                              .collection('users')
+                              .get()
+                              .then((QuerySnapshot querySnapshot) {
+                            querySnapshot.docs.forEach((doc) async {
+                              if (doc['phoneNo'] == phoneNumber) {
+                                print("================${doc['emailId']}");
+                                print(doc.id);
+                                await DataBase.addCustomerDetails(
+                                    name: _nameController.text,
+                                    phoneno: _phoneNoController.text,
+                                    pincode: _pinCodeController.text,
+                                    locality: _localityController.text,
+                                    address: _addressController.text,
+                                    city: _cityController.text,
+                                    landmark: _landmarkController.text,
+                                    userEmail: doc['emailId']);
+                                //saveAddress();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OrderSummery(
+                                              books: widget.books,
+                                              name: _nameController.text,
+                                              phoneNo: _phoneNoController.text,
+                                              pincode: _pinCodeController.text,
+                                              locality:
+                                                  _localityController.text,
+                                              address: _addressController.text,
+                                              city: _cityController.text,
+                                              landmark:
+                                                  _landmarkController.text,
+                                            )));
+                              }
+                            });
+                          });
                         },
                         child: Text(
                           "CONTINUE",
@@ -328,6 +371,20 @@ class PlaceOrderState extends State<PlaceOrder> {
             ),
           ]),
         ])));
+  }
+
+  void getUserEmail() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) async {
+        if (doc['phoneNo'] == phoneNumber) {
+          print("================${doc['emailId']}");
+          print(doc.id);
+        }
+      });
+    });
   }
 
   void saveAddress() async {
