@@ -46,7 +46,6 @@ class OrderSummeryState extends State<OrderSummery> {
   void initState() {
     super.initState();
     getData();
-    getDocument();
     getLoginData();
   }
 
@@ -372,15 +371,30 @@ class OrderSummeryState extends State<OrderSummery> {
                         ]),
                     RaisedButton(
                         color: Colors.orangeAccent,
+                    
                         onPressed: () {
-                          // saveAddress();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OrderSuccessFully(
-                                        address: widget.address,
-                                        phoneno: '$phoneNumber',
-                                      )));
+                          FirebaseFirestore.instance
+                              .collection('users')
+                              .get()
+                              .then((QuerySnapshot querySnapshot) {
+                            querySnapshot.docs.forEach((doc) async {
+                              if (doc['phoneNo'] == phoneNumber) {
+                                print("================${doc['emailId']}");
+                                print(doc.id);
+
+                                // saveAddress();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OrderSuccessFully(
+                                              address: widget.address,
+                                              phoneno: '$phoneNumber',
+                                              text: doc['emailId'],
+                                              docId: doc.id,
+                                            )));
+                              }
+                            });
+                          });
                         },
                         child: Text(
                           "CHECKOUT",
@@ -390,18 +404,6 @@ class OrderSummeryState extends State<OrderSummery> {
             )
           ])
         ])));
-  }
-
-  getDocument() {
-    FirebaseFirestore.instance
-        .collection('users')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) async {
-        print(doc["EmailId"]);
-        print(doc.id);
-      });
-    });
   }
 }
 
