@@ -1,3 +1,4 @@
+import 'package:book_store_app/models/book_sort_low_to_high.dart';
 import 'package:book_store_app/models/books.dart';
 import 'package:book_store_app/screens/bookdetails/add_to_card.dart';
 import 'package:book_store_app/screens/home/components/body.dart';
@@ -17,25 +18,35 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   FocusNode _focusNode = FocusNode();
+  CollectionReference _collectionRef =
+      FirebaseFirestore.instance.collection('booksdetails');
   int numOfItem = 0;
   int numberOfWish = 0;
-  SharedPreferences? _preferences;
-  List<String> _relevence = [
-    ' Price: Low to High',
-    ' Price: High to Low',
-    ' Newest Arrivals',
-  ];
-  String? _selectedrelevence;
-
   var searchString;
   bool _searchView = false;
   bool _addcard = false;
   bool _addWish = false;
   bool favirote = false;
 
+  List<String> _relevence = [
+    ' Price: Low to High',
+    ' Price: High to Low',
+  ];
+  String? _selectedrelevence;
+
   void initState() {
     super.initState();
     _saveCounter();
+    getData();
+  }
+
+  Future<void> getData() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    print(allData);
   }
 
   void _saveCounter() async {
@@ -48,10 +59,7 @@ class HomeState extends State<Home> {
 
   changeView() {
     if (_searchView == true) {
-      return LowToHigh();
-    }
-    if (_searchView == true && _selectedrelevence == _relevence[1]) {
-      return HighToLowRel();
+      return searchBooks();
     } else {
       return Body();
     }
@@ -95,16 +103,17 @@ class HomeState extends State<Home> {
               width: 10,
             ),
             Stack(children: <Widget>[
-              Positioned(
-                height: 250,
-                width: 250,
-                child: Container(
-                  width: 150,
-                  height: 150,
-                  child: Text(numOfItem.toString().padLeft(2, "0"),
-                      style: TextStyle(fontSize: 15, color: Colors.red)),
+              if (numOfItem >= 1)
+                Positioned(
+                  height: 250,
+                  width: 250,
+                  child: Container(
+                    width: 150,
+                    height: 150,
+                    child: Text(numOfItem.toString().padLeft(2, "0"),
+                        style: TextStyle(fontSize: 15, color: Colors.red)),
+                  ),
                 ),
-              ),
               IconButton(
                   onPressed: () {
                     Navigator.push(context,
@@ -113,16 +122,17 @@ class HomeState extends State<Home> {
                   icon: Icon(Icons.shopping_cart_outlined))
             ]),
             Stack(children: <Widget>[
-              Positioned(
-                height: 250,
-                width: 250,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  child: Text(numberOfWish.toString().padLeft(2, "0"),
-                      style: TextStyle(fontSize: 15, color: Colors.red)),
+              if (numberOfWish >= 1)
+                Positioned(
+                  height: 250,
+                  width: 250,
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    child: Text(numberOfWish.toString().padLeft(2, "0"),
+                        style: TextStyle(fontSize: 15, color: Colors.red)),
+                  ),
                 ),
-              ),
               IconButton(
                   onPressed: () {
                     setState(() {
@@ -297,14 +307,9 @@ class HomeState extends State<Home> {
                   onPressed: () async {
                     SharedPreferences _preferance =
                         await SharedPreferences.getInstance();
-                    // _preferance
-                    //     .remove('numOfItem');
                     _preferance.setInt('numOfItem', numOfItem);
-                    // setState(() {
-                    //   _addcard = !_addcard;
-                    // });
-
                     setState(() {
+                      _addcard = !_addcard;
                       numOfItem++;
                     });
                   })),
@@ -349,59 +354,15 @@ class HomeState extends State<Home> {
                   ),
                 ),
                 onPressed: () async {
+                  SharedPreferences _preferance =
+                      await SharedPreferences.getInstance();
+                  _preferance.setInt('numOfItem', numOfItem);
                   setState(() {
                     _addcard = !_addcard;
+                    numOfItem--;
                   });
                 })),
       ],
     );
   }
 }
-
-// class DropDown extends StatefulWidget {
-//   @override
-//   DropDownState createState() => DropDownState();
-// }
-
-// class DropDownState extends State<DropDown> {
-//   List<String> _relevence = [
-//     ' Price: Low to High',
-//     ' Price: High to Low',
-//     ' Newest Arrivals',
-//   ];
-//   String? _selectedrelevence;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         width: 140,
-//         height: 30,
-//         decoration: BoxDecoration(
-//           border: Border.all(color: Colors.grey),
-//         ),
-//         child: DropdownButton(
-//           underline: SizedBox(),
-//           iconSize: 25,
-//           hint: Text(
-//             ' Sort by relevance   ',
-//             style: TextStyle(fontSize: 12),
-//           ),
-//           value: _selectedrelevence,
-//           onChanged: (String? newValue) {
-//             books.sort();
-//             setState(() {
-//               _selectedrelevence = newValue;
-//             });
-//           },
-//           items: _relevence.map((relevence) {
-//             return DropdownMenuItem(
-//               child: Text(
-//                 relevence,
-//                 style: TextStyle(fontSize: 12),
-//                 textAlign: TextAlign.left,
-//               ),
-//               value: relevence,
-//             );
-//           }).toList(),
-//         ));
-//   }
-// }

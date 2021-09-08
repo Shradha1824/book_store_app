@@ -38,6 +38,7 @@ class DataBase {
     required String address,
     required String city,
     required String landmark,
+    required String userEmail,
   }) async {
     DocumentReference documentReference = _customerCollection.doc();
 
@@ -49,6 +50,7 @@ class DataBase {
       "address": address,
       "city": city,
       "landmark": landmark,
+      "userEmail": userEmail
     };
 
     await documentReference
